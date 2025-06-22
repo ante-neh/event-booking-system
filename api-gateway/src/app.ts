@@ -7,21 +7,28 @@ import { rateLimitMiddleware } from './middlewares/rate-limit.middleware';
 import { authServiceProxy } from './routes/auth.route';
 import { adminServiceProxy } from './routes/admin.route';
 import { authMiddleware } from './middlewares/auth.middleware';
-
+import { eventServiceProxy } from './routes/event.route';
+import { userServiceProxy } from './routes/user.route';
+import { bookingServiceProxy } from './routes/booking.route';
+import { paymentServiceProxy } from './routes/payment.route';
+import { notificationServiceProxy } from './routes/notification.route';
 
 const app = express();
+
 app.use(helmet());
 app.use(corsConfig);
 app.use(express.json());
-app.use(requestLogger)
-app.use(rateLimitMiddleware)
+app.use(requestLogger);
+app.use(rateLimitMiddleware);
 
-app.use('/api/v1/auth', authServiceProxy())
-app.use('/api/v1/admins', authMiddleware, adminServiceProxy())
-app.use('/api/v1/events', authMiddleware, adminServiceProxy())
-app.use('/api/v1/users', authMiddleware, adminServiceProxy())
-app.use('/api/v1/bookings', authMiddleware, adminServiceProxy())
-app.use('/api/v1/payments', authMiddleware, adminServiceProxy())
+app.use('/api/v1/auth', authServiceProxy());
+app.use('/api/v1/admins', authMiddleware, adminServiceProxy());
+app.use('/api/v1/events', authMiddleware, eventServiceProxy());
+app.use('/api/v1/users', authMiddleware, userServiceProxy());
+app.use('/api/v1/bookings', authMiddleware, bookingServiceProxy());
+app.use('/api/v1/payments', authMiddleware, paymentServiceProxy());
+app.use('/api/v1/notifications', authMiddleware, notificationServiceProxy());
 
 app.use(errorMiddleware)
+
 export { app }
