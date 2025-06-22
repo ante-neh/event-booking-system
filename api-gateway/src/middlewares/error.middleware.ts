@@ -32,7 +32,7 @@ const errorMiddleware = (err: any, req: Request, res:Response, next: NextFunctio
     })
 
     res.json(statusCode).json({
-        status:'error',
+        status:false,
         message: message,
     })
 };
