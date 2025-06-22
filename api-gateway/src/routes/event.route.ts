@@ -2,11 +2,12 @@ import proxy from "express-http-proxy";
 import { config } from "../config/env";
 import { proxyOptions } from "../config/proxy";
 import { logger } from "../utils/logger.util";
+import { IAuthRequest } from "../types";
 
 const eventServiceProxy = () => {
   return proxy(config.AUTH_SERVICE_URL, {
     ...proxyOptions,
-    proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+    proxyReqOptDecorator: (proxyReqOpts,  srcReq: IAuthRequest) => {
       proxyReqOpts.headers = {
         ...(proxyReqOpts.headers || {}),
         "Content-Type": "application/json",
@@ -16,7 +17,7 @@ const eventServiceProxy = () => {
       return proxyReqOpts;
     },
     userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
-      logger.info("Response recieved from auth service", {
+      logger.info("Response recieved from events service", {
         statusCode: proxyRes.statusCode,
       });
       return proxyResData;

@@ -18,7 +18,7 @@ const adminServiceProxy = () => {
       return proxyReqOpts;
     },
     userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
-      logger.info("Response recieved from auth service", {
+      logger.info("Response recieved from admin service", {
         statusCode: proxyRes.statusCode,
       });
       return proxyResData;

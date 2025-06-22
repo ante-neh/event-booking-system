@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { rateLimiter } from '../utils/rateLimiter.util';
 import { logger } from '../utils/logger.util';
+import { IAuthRequest } from '../types';
 
 
-const rateLimitMiddleware = async(req: Request, res: Response, next: NextFunction)=>{
-    const key = req.headers['x-api-key'] as string || req.ip as string;
+const rateLimitMiddleware = async(req: IAuthRequest, res: Response, next: NextFunction)=>{
+    const key = req.headers['x-api-key'] as string || req.user?.id ||  req.ip as string;
     try {
         const rateLimitRes = await rateLimiter.consume(key);
         res.setHeader('X-RateLimit-Remaining', rateLimitRes.remainingPoints);
