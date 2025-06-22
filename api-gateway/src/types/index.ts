@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 class BadRequestError extends Error{
     constructor(message: string){
         super(message)
@@ -22,9 +24,18 @@ class ForbiddenError extends Error{
     }
 }
 
+
+interface IAuthRequest extends Request{
+     user?: {
+            id: string;
+            email: string;
+            role: string;
+        }
+}
 export {
     BadRequestError,
     NotFoundError,
     UnauthorizedError,
-    ForbiddenError
+    ForbiddenError,
+    IAuthRequest
 }
