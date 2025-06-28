@@ -1,18 +1,50 @@
 import dotenv from "dotenv";
 import path from "path";
+import { AppConfig, Environment } from "../types";
 
-dotenv.config({ path: path.resolve(process.cwd(), ".env") }); 
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 const getEnv = (key: string, required = true): string => {
-    const value = process.env[key] as string;;
-    if (required && !value) {
-        throw new Error(`Environment variable ${key} is required but not set.`);
-    }
-    return value;
-}
+  const value = process.env[key];
+  if (required && !value) {
+    throw new Error(`Environment variable ${key} is required but not set.`);
+  }
+  return value as string;
+};
 
-export const config = {
-    PORT: getEnv("PORT"),
-    NODE_ENV: getEnv("NODE_ENV"),
-    DB_URL: getEnv("DB_URL"),
-}
+export const config: AppConfig = {
+  PORT: getEnv("PORT"),
+  NODE_ENV: getEnv("NODE_ENV") as Environment,
+  development: {
+    username: getEnv("DEVELOPMENT_PG_USER"),
+    password: getEnv("DEVELOPMENT_PG_PASSWORD"),
+    database: getEnv("DEVELOPMENT_PG_DATABASE"),
+    host: getEnv("DEVELOPMENT_PG_HOST"),
+    dialect: "postgres",
+  },
+  test: {
+    username: getEnv("TEST_PG_USER", false),
+    password: getEnv("TEST_PG_PASSWORD", false),
+    database: getEnv("TEST_PG_DATABASE", false),
+    host: getEnv("TEST_PG_HOST", false),
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+      ssl: false,
+    },
+  },
+  production: {
+    username: getEnv("PRODUCTION_PG_USER", false),
+    password: getEnv("PRODUCTION_PG_PASSWORD", false),
+    database: getEnv("PRODUCTION_PG_DATABASE", false),
+    host: getEnv("PRODUCTION_PG_HOST", false),
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  },
+};

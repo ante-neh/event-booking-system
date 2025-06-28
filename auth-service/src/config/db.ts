@@ -1,14 +1,25 @@
-import mongoose from 'mongoose';
-import { config } from './env';
-import { logger } from '../utils/logger.utils';
+import { Sequelize } from 'sequelize-typescript'
+import { config } from './env'
 
-const connectToDb = async()=>{
-    try{
-        const conn = await mongoose.connect(config.DB_URL)
-        logger.info(`MongoDB connected: ${conn.connection.host}`);
-    }catch(err){
-        logger.error("Failed to connect to database", err);
-    }
-}
+const nodEnv = config['NODE_ENV']as 'development' | 'test' | 'production';
+const dbConfig = config[nodEnv];
 
-export { connectToDb };
+const sequelize: Sequelize = new Sequelize({
+    database: dbConfig.database,
+    username: dbConfig.username,
+    password: dbConfig.password,
+    dialect: dbConfig.dialect,
+    host: dbConfig.host,
+    dialectOptions: dbConfig.dialectOptions,
+    protocol: dbConfig.protocol,
+    pool:{
+
+    },
+    retry:{
+        max: 3
+    },
+    models: [],
+    logging: false,
+});
+
+export { sequelize }
