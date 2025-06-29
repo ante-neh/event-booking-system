@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { BadRequestError, ForbiddenError, NotFoundError, UnauthorizedError } from '../types';
 import { logger } from '../utils/logger.utils';
+import { config } from '../config/env';
 
 const errorMiddleware = (err:any, req: Request, res: Response, next: NextFunction)=> {
     let message = 'Internal server error';
@@ -29,10 +30,11 @@ const errorMiddleware = (err:any, req: Request, res: Response, next: NextFunctio
     logger.error("Error occurred: ", {
         status: statusCode,
         message: message,
+        stack: config.NODE_ENV === 'development' ? err.stack : undefined
     })
 
     res.status(statusCode).json({
-        status: 'error',
+        status: false,
         message: message
     })
 }

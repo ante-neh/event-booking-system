@@ -61,11 +61,13 @@ const signUp = asyncAwaitHandler(
           },
         },
       });
-    } catch (err) {
+    } catch (err: any) {
       await transaction.rollback();
       logger.error("Unable to create user", {
-        error: err,
+        message: err.message,
+        stack: err.stack,
       });
+
       return next(new Error("Internale Server Error"));
     }
   }
@@ -122,12 +124,12 @@ const signIn = asyncAwaitHandler(
       success: true,
       message: "User logged in successfully",
       data: {
-        token: accessToken,
         user: {
           id: existingUser?.id || "",
           email: existingUser?.email || "",
           role: existingUser?.role || "",
         },
+        token: accessToken,
       },
     });
   }
@@ -193,7 +195,7 @@ const refreshToken = asyncAwaitHandler(
       success: true,
       message: "Refresh token updated successfully",
       data: {
-        accessToken,
+        token: accessToken,
       },
     });
   }

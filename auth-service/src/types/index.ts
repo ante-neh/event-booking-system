@@ -1,3 +1,4 @@
+// import type { Options } from 'sequelize';
 class BadRequestError extends Error {
     constructor(message: string){
         super(message);
@@ -40,24 +41,11 @@ interface AppConfig {
   ACCESS_TOKEN_EXPIRES_IN: string,
   REFRESH_TOKEN_EXPIRES_IN: string
   NODE_ENV: Environment;
-  development: DBConfig;
-  test: DBConfig;
-  production: DBConfig;
 }
 
-interface IUser{
-    id?: string,
-    email: string,
-    password: string,
-    role: string
-}
-
-interface IRefreshToken{
-    id?: string,
-    user_id: string,
-    token: string,
-    revoked: boolean,
-}
+// interface SequelizeConfig {
+//   [key: string]: Options;
+// }
 
 export { 
     BadRequestError,
@@ -66,6 +54,6 @@ export {
     NotFoundError,
     Environment,
     AppConfig,
-    IUser,
-    IRefreshToken
+    DBConfig
+    // SequelizeConfig
 }
