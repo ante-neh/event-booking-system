@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.eventServiceProxy = void 0;
+const express_http_proxy_1 = __importDefault(require("express-http-proxy"));
+const env_1 = require("../config/env");
+const proxy_1 = require("../config/proxy");
+const logger_util_1 = require("../utils/logger.util");
+const eventServiceProxy = () => {
+    return (0, express_http_proxy_1.default)(env_1.config.AUTH_SERVICE_URL, Object.assign(Object.assign({}, proxy_1.proxyOptions), { proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
+            var _a;
+            proxyReqOpts.headers = Object.assign(Object.assign({}, (proxyReqOpts.headers || {})), { "Content-Type": "application/json", "x-user-id": (_a = srcReq.user) === null || _a === void 0 ? void 0 : _a.id });
+            return proxyReqOpts;
+        }, userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {
+            logger_util_1.logger.info("Response recieved from events service", {
+                statusCode: proxyRes.statusCode,
+            });
+            return proxyResData;
+        } }));
+};
+exports.eventServiceProxy = eventServiceProxy;

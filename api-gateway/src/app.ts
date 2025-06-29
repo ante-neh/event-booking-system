@@ -10,8 +10,6 @@ import { authMiddleware } from './middlewares/auth.middleware';
 import { eventServiceProxy } from './routes/event.route';
 import { userServiceProxy } from './routes/user.route';
 import { bookingServiceProxy } from './routes/booking.route';
-import { paymentServiceProxy } from './routes/payment.route';
-import { notificationServiceProxy } from './routes/notification.route';
 
 const app = express();
 
@@ -26,8 +24,6 @@ app.use('/api/v1/admins', authMiddleware, adminServiceProxy());
 app.use('/api/v1/events', authMiddleware, eventServiceProxy());
 app.use('/api/v1/users', authMiddleware, userServiceProxy());
 app.use('/api/v1/bookings', authMiddleware, bookingServiceProxy());
-app.use('/api/v1/payments', authMiddleware, paymentServiceProxy());
-app.use('/api/v1/notifications', authMiddleware, notificationServiceProxy());
 
 app.use(errorMiddleware)
 
