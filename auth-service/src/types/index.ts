@@ -35,10 +35,28 @@ interface DBConfig {
 type Environment = 'development' | 'test' | 'production';
 interface AppConfig {
   PORT: string;
+  ACCESS_TOKEN_SECRET: string,
+  REFRESH_TOKEN_SECRET: string,
+  ACCESS_TOKEN_EXPIRES_IN: string,
+  REFRESH_TOKEN_EXPIRES_IN: string
   NODE_ENV: Environment;
   development: DBConfig;
   test: DBConfig;
   production: DBConfig;
+}
+
+interface IUser{
+    id?: string,
+    email: string,
+    password: string,
+    role: string
+}
+
+interface IRefreshToken{
+    id?: string,
+    user_id: string,
+    token: string,
+    revoked: boolean,
 }
 
 export { 
@@ -47,5 +65,7 @@ export {
     ForbiddenError,
     NotFoundError,
     Environment,
-    AppConfig
+    AppConfig,
+    IUser,
+    IRefreshToken
 }

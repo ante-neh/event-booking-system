@@ -15,6 +15,10 @@ const getEnv = (key: string, required = true): string => {
 export const config: AppConfig = {
   PORT: getEnv("PORT"),
   NODE_ENV: getEnv("NODE_ENV") as Environment,
+  ACCESS_TOKEN_SECRET:getEnv("REFRESH_TOKEN_SECRET"), 
+  REFRESH_TOKEN_SECRET: getEnv("REFRESH_TOKEN_SECRET"),
+  ACCESS_TOKEN_EXPIRES_IN: getEnv("ACCESS_TOKEN_EXPIRES_IN"),
+  REFRESH_TOKEN_EXPIRES_IN: getEnv("REFRESH_TOKEN_EXPIRES_IN"),
   development: {
     username: getEnv("DEVELOPMENT_PG_USER"),
     password: getEnv("DEVELOPMENT_PG_PASSWORD"),

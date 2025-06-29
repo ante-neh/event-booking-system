@@ -1,18 +1,19 @@
 import { Model, DataType, Column, PrimaryKey, ForeignKey, BelongsTo, Table } from "sequelize-typescript";
+import { InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
 import { Users } from "./user";
 
 @Table({
     tableName: 'refresh_token',
     timestamps: true
 })
-class RefreshToken extends Model<RefreshToken>{
+class RefreshToken extends Model<InferAttributes<RefreshToken>, InferCreationAttributes<RefreshToken>>{
     @PrimaryKey
     @Column({
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,
         allowNull: false
     })
-    id!: string;
+    id!: CreationOptional<string>;
     @Column({
         type: DataType.STRING,
         allowNull: false
@@ -23,7 +24,7 @@ class RefreshToken extends Model<RefreshToken>{
         defaultValue: false,
         allowNull: false
     })
-    is_revoked!: boolean
+    is_revoked!: CreationOptional<boolean>;
     @ForeignKey(() =>Users)
     @Column({
         type: DataType.UUID,
@@ -31,7 +32,7 @@ class RefreshToken extends Model<RefreshToken>{
     })
     user_id!: string
     @BelongsTo(()=>Users)
-    users!: Users
+    users!: CreationOptional<Users>
 }
 
 export { RefreshToken }

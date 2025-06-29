@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
 import { config } from './env'
+import { Users } from '../models/user';
+import { RefreshToken } from '../models/refresh-token';
 
 const nodEnv = config['NODE_ENV']as 'development' | 'test' | 'production';
 const dbConfig = config[nodEnv];
@@ -18,7 +20,7 @@ const sequelize: Sequelize = new Sequelize({
     retry:{
         max: 3
     },
-    models: [],
+    models: [Users, RefreshToken],
     logging: false,
 });
 
