@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userProfileRouter = void 0;
+const express_1 = require("express");
+const user_profile_contollers_1 = require("../controllers/user-profile.contollers");
+const authentication_middleware_1 = require("../middlewares/authentication.middleware");
+const authorization_middleware_1 = require("../middlewares/authorization.middleware");
+const validation_middleware_1 = require("../middlewares/validation.middleware");
+const user_profile_schema_1 = require("../schema/user-profile.schema");
+const userProfileRouter = (0, express_1.Router)();
+exports.userProfileRouter = userProfileRouter;
+userProfileRouter.get("/:id", authentication_middleware_1.authenticate, user_profile_contollers_1.getUserProfile);
+userProfileRouter.get("/", authentication_middleware_1.authenticate, (0, authorization_middleware_1.authorize)(['admin']), (0, validation_middleware_1.validationMiddleware)(user_profile_schema_1.userQuerySchema, 'query'), user_profile_contollers_1.getUserProfiles);
+userProfileRouter.post("/", authentication_middleware_1.authenticate, (0, validation_middleware_1.validationMiddleware)(user_profile_schema_1.userProfileSchema, 'body'), user_profile_contollers_1.createUserProfile);
+userProfileRouter.patch("/:id", authentication_middleware_1.authenticate, (0, validation_middleware_1.validationMiddleware)(user_profile_schema_1.userProfileUpadetSchema, 'body'), user_profile_contollers_1.updateUserProfile);
+userProfileRouter.delete("/:id", authentication_middleware_1.authenticate, (0, authorization_middleware_1.authorize)(['attendee', 'organizer']), user_profile_contollers_1.deleteUserProfile);
+userProfileRouter.patch("/:id/roles", authentication_middleware_1.authenticate, (0, authorization_middleware_1.authorize)(["admin"]), (0, validation_middleware_1.validationMiddleware)(user_profile_schema_1.userRoleUpdateSchema, 'body'), user_profile_contollers_1.updateUserRole);

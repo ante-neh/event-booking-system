@@ -12,6 +12,7 @@ const userServiceProxy = () => {
         ...(proxyReqOpts.headers || {}),
         "Content-Type": "application/json",
         "x-user-id": srcReq.user?.id,
+        "x-user-role": srcReq.user?.role,
       };
 
       return proxyReqOpts;
