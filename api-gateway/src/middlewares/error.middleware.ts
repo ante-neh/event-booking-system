@@ -28,7 +28,8 @@ const errorMiddleware = (err: any, req: Request, res:Response, next: NextFunctio
 
     logger.warn('Error has occurred', {
         status: statusCode,
-        message: message
+        message: message,
+        error: err
     })
 
     res.json(statusCode).json({

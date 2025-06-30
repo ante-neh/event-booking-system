@@ -8,14 +8,14 @@ const authMiddleware = (req: IAuthRequest, res: Response, next: NextFunction): v
     const token = req.headers.authorization?.split(" ")[1] as string;
     if(!token){
         logger.warn('No token provided in request headers');
-        res.status(401).json({ succuss: 'error', message: 'No token provided' });
+        res.status(401).json({ succuss: false, message: 'No token provided' });
         return;
     }
 
     verify(token, config.JWT_SECRET, (err, decoded)=> {
         if(err){
             logger.error('Token verification failed', { error: err.message });
-            res.status(401).json({ success: 'error', message: 'Invalid token' });
+            res.status(401).json({ success: false, message: 'Invalid token' });
             return;
         }
 

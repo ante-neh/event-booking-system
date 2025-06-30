@@ -11,7 +11,6 @@ const authenticate = (
     req.user = req.user || ({} as { id: string; role: Role });
     const id = req.headers["x-user-id"] as string | undefined;
     const role = req.headers["x-user-role"] as Role | undefined;
-
     if (!id || !role) {
       logger.warn("Unauthenticated request", {
         method: req.method,

@@ -80,7 +80,7 @@ const getUserProfile = asyncAwaitHandler(
         success: true,
         message: "",
         data: {
-          user_profile,
+          user: user_profile?user_profile : {},
         },
       });
     } catch (err) {
@@ -138,7 +138,7 @@ const getUserProfiles = asyncAwaitHandler(
         success: true,
         message: "User profiles",
         data: {
-          users: userProfiles.rows,
+          users: userProfiles.rows??[],
         },
         pagination: {
           totalCount: userProfiles.count,
@@ -225,7 +225,7 @@ const deleteUserProfile = asyncAwaitHandler(
 
       await user.destroy();
 
-      return res.status(204).json({
+      return res.status(200).json({
         success: true,
         message: "User profile deleted successfully",
       });

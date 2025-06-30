@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { config } from "./dbConfig";
+import { UsersProfile } from "../models/user-profile.models";
 
 const env =
   ((process.env.NODE_ENV || "development") as "development") ||
@@ -21,7 +22,7 @@ const sequelize: Sequelize = new Sequelize({
   retry: {
     max: 5,
   },
-  models: [],
+  models: [UsersProfile],
   logging: false,
 });
 

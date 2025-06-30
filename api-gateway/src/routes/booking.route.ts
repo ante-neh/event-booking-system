@@ -5,7 +5,7 @@ import { logger } from "../utils/logger.util";
 import { IAuthRequest } from "../types";
 
 const bookingServiceProxy = () => {
-  return proxy(config.AUTH_SERVICE_URL, {
+  return proxy(config.BOOKING_SERVICE_URL, {
     ...proxyOptions,
     proxyReqOptDecorator: (proxyReqOpts,  srcReq: IAuthRequest) => {
       proxyReqOpts.headers = {

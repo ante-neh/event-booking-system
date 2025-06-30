@@ -5,7 +5,7 @@ import { logger } from "../utils/logger.util";
 import { IAuthRequest } from "../types";
 
 const adminServiceProxy = () => {
-  return proxy(config.AUTH_SERVICE_URL, {
+  return proxy(config.ADMIN_SERVICE_URL, {
     ...proxyOptions,
     proxyReqOptDecorator: (proxyReqOpts, srcReq: IAuthRequest) => {
       proxyReqOpts.headers = {

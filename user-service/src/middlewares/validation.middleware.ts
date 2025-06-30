@@ -20,7 +20,7 @@ const validationMiddleware =
         });
       }
 
-      req[validationType] = result;
+      req[validationType] = result.data;
       next();
     } catch (error: any) {
       logger.error("validation error", {

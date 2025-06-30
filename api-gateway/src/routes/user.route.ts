@@ -5,7 +5,7 @@ import { logger } from "../utils/logger.util";
 import { IAuthRequest } from "../types";
 
 const userServiceProxy = () => {
-  return proxy(config.AUTH_SERVICE_URL, {
+  return proxy(config.USER_SERVICE_URL, {
     ...proxyOptions,
     proxyReqOptDecorator: (proxyReqOpts,  srcReq: IAuthRequest) => {
       proxyReqOpts.headers = {
@@ -14,7 +14,6 @@ const userServiceProxy = () => {
         "x-user-id": srcReq.user?.id,
         "x-user-role": srcReq.user?.role,
       };
-
       return proxyReqOpts;
     },
     userResDecorator: (proxyRes, proxyResData, userReq, userRes) => {

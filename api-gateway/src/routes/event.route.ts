@@ -5,7 +5,7 @@ import { logger } from "../utils/logger.util";
 import { IAuthRequest } from "../types";
 
 const eventServiceProxy = () => {
-  return proxy(config.AUTH_SERVICE_URL, {
+  return proxy(config.EVENT_SERVICE_URL, {
     ...proxyOptions,
     proxyReqOptDecorator: (proxyReqOpts,  srcReq: IAuthRequest) => {
       proxyReqOpts.headers = {

@@ -27,7 +27,6 @@ class ForbiddenError extends Error{
 interface AppConfig{
     PORT: string,
     NODE_ENV: string,
-    ACCESS_TOKEN_SECRET: string;
 }
 
 interface DBConfig {
